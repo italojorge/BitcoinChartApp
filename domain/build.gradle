@@ -1,9 +1,7 @@
 apply plugin: 'kotlin'
 
 dependencies {
-    dataDependencies.each { add(it.configuration, it.dependency, it.options) }
-    api project(':domain')
-
+    domainDependencies.each { add(it.configuration, it.dependency, it.options) }
 }
 
 sourceCompatibility = "8"

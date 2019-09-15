@@ -16,7 +16,8 @@ ext {
             [configuration: "implementation", dependency: "$navigationFragment"],
             [configuration: "implementation", dependency: "$constraintLayout"],
             [configuration: "implementation", dependency: "$material"],
-            [configuration: "implementation", dependency: "$anko"]
+            [configuration: "implementation", dependency: "$anko"],
+            [configuration: "implementation", dependency: "$graphView"]
     ]
 
     presentationDependencies = commonsDependencies + testPresentationDependencies + [

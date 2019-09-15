@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 object WebServiceFactory {
 
-    inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String = BASE_URL): T {
+    inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String = BITCOIN_CHARTS_URL): T {
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
             .client(okHttpClient)
