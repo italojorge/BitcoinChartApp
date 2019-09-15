@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import br.com.db1.domain.interactor.bitcoinChart.GetBitcoinChartUseCase
+import br.com.db1.domain.interactor.bitcoinLastValue.GetBitcoinLastValueUseCase
 import br.com.db1.presentation.mapper.bitcoin.BitcoinChartMapper
 import br.com.db1.presentation.model.BitcoinChartBinding
 import br.com.db1.presentation.model.emptyBitcoinChartBinding
@@ -15,12 +16,16 @@ class BitcoinViewModel : ViewModel(),
     LifecycleObserver, KoinComponent {
 
     private val bitcoinChartViewState by viewState<BitcoinChartBinding>()
+    private val bitcoinLastValueViewState by viewState<String>()
 
     private val getBitcoinChartUseCase: GetBitcoinChartUseCase by useCase()
+    private val getBitcoinLastValueUseCase: GetBitcoinLastValueUseCase by useCase()
 
     private var bitcoinChartBinding = emptyBitcoinChartBinding()
+    private var bitcoinLastValueBinding = "0.0"
 
     fun getBitcoinChartViewState() = bitcoinChartViewState.asLiveData()
+    fun getBitcoinLastValueViewState() = bitcoinLastValueViewState.asLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun getBitcoinChart() {
@@ -33,6 +38,21 @@ class BitcoinViewModel : ViewModel(),
             },
             onError = {
                 bitcoinChartViewState.postError(it)
+            }
+        )
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun getBitcoinLastValue() {
+        bitcoinLastValueViewState.postLoading()
+
+        getBitcoinLastValueUseCase.execute(
+            onSuccess = {
+                bitcoinLastValueBinding = it.lastValue.toString()
+                bitcoinLastValueViewState.postSuccess(bitcoinLastValueBinding)
+            },
+            onError = {
+                bitcoinLastValueViewState.postError(it)
             }
         )
     }

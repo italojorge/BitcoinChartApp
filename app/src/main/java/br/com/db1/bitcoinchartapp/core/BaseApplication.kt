@@ -16,9 +16,9 @@ class BaseApplication : Application() {
         startKoin {
             modules(
                 listOf(
+                    dataModule,
                     presentationModule,
-                    domainModule,
-                    dataModule
+                    domainModule
                 )
             ).androidContext(applicationContext)
         }

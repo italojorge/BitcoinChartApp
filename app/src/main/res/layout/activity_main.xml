@@ -34,7 +34,7 @@
                 android:id="@+id/bitcoinValueTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bitcoin_price"
+                tools:text="@string/bitcoin_price"
                 android:textSize="20sp"
                 android:textColor="@color/colorAccent"
                 android:fontFamily="sans-serif-black"

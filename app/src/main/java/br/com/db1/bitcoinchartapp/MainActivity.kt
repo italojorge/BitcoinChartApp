@@ -5,16 +5,16 @@ import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
 import br.com.db1.presentation.ViewStateListener
 import br.com.db1.presentation.bitcoin.BitcoinViewModel
+import com.jjoe64.graphview.DefaultLabelFormatter
+import com.jjoe64.graphview.LegendRenderer
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.jjoe64.graphview.DefaultLabelFormatter
-import com.jjoe64.graphview.LegendRenderer
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(),ViewStateListener {
+class MainActivity : AppCompatActivity(), ViewStateListener {
     override fun onStateError(error: Throwable) {
 
     }
@@ -31,15 +31,26 @@ class MainActivity : AppCompatActivity(),ViewStateListener {
         addObservers()
     }
 
-    private fun addObservers(){
+    private fun addObservers() {
+        viewModel.getBitcoinLastValueViewState().onPostValue(
+            this,
+            onSuccess = {
+                bitcoinValueTextView.text = String.format(
+                    getString(R.string.bitcoin_price),
+                    it
+                )
+            },
+            onError = {}
+        )
+
+
         viewModel.getBitcoinChartViewState().onPostValue(this,
             onSuccess = {
 
 
-
                 val series = LineGraphSeries(
-                    it.chart.map{
-                        DataPoint(it.date.toDouble(),it.bitcoinValue)
+                    it.chart.map {
+                        DataPoint(it.date.toDouble(), it.bitcoinValue)
                     }.toTypedArray()
                 )
 
@@ -66,7 +77,7 @@ class MainActivity : AppCompatActivity(),ViewStateListener {
 
                 graphView.addSeries(series)
                 series.setAnimated(true)
-                series.title = "Preço médio de mercado em USDResponse dos últimos 30 dias."
+                series.title = "Preço médio de mercado em USD dos últimos 30 dias."
                 graphView.legendRenderer.align = LegendRenderer.LegendAlign.TOP
                 graphView.legendRenderer.isVisible = true
             }
