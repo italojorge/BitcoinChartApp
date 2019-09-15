@@ -2,4 +2,5 @@
     <string name="app_name">BitcoinChart</string>
     <string name="bitcoin_price">Preço da unidade de Bitcoin: $%s USD</string>
     <string name="bitcoin_image_content_description">Imagem representativa exibindo moeda bitcoin</string>
+    <string name="graph_title">Preço médio de mercado em USD dos últimos 30 dias.</string>
 </resources>
