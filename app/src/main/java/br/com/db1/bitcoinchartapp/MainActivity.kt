@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(),ViewStateListener {
                 )
 
                 // custom label formatter to show currency "EUR"
-                graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
+                graphView.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
                     override fun formatLabel(value: Double, isValueX: Boolean): String {
                         return if (isValueX) {
                             // show normal x values
@@ -55,22 +55,20 @@ class MainActivity : AppCompatActivity(),ViewStateListener {
                         }
                     }
                 }
-
-
                 // set manual X bounds
-                graph.viewport.isXAxisBoundsManual = true
-                graph.viewport.setMinX(it.chart.first().date.toDouble())
-                graph.viewport.setMaxX(it.chart.last().date.toDouble())
+                graphView.viewport.isXAxisBoundsManual = true
+                graphView.viewport.setMinX(it.chart.first().date.toDouble())
+                graphView.viewport.setMaxX(it.chart.last().date.toDouble())
 
-                graph.viewport.isScalable = true
+                graphView.viewport.isScalable = true
 // activate vertical scrolling
-                graph.viewport.setScalableY(true)
+                graphView.viewport.setScalableY(true)
 
-                graph.addSeries(series)
+                graphView.addSeries(series)
                 series.setAnimated(true)
-                series.title = "Valor x Data"
-                graph.legendRenderer.align = LegendRenderer.LegendAlign.TOP
-                graph.legendRenderer.isVisible = true
+                series.title = "Preço médio de mercado em USDResponse dos últimos 30 dias."
+                graphView.legendRenderer.align = LegendRenderer.LegendAlign.TOP
+                graphView.legendRenderer.isVisible = true
             }
         )
         lifecycle.addObserver(viewModel)

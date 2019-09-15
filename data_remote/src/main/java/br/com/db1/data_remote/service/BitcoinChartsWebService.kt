@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface BitcoinChartsWebService {
     @GET(THIRTY_DAY_MARKET_PRICE_PATH)
-    fun getThirtyDayBitcoinChart(): Deferred<BitcoinMarketPriceResponse>
+    fun getBitcoinChart(): Deferred<BitcoinMarketPriceResponse>
 }
 
 const val THIRTY_DAY_MARKET_PRICE_PATH = "market-price?timespan=30days"

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BitcoinChartApp</string>
+    <string name="bitcoin_price">Preço da unidade de Bitcoin: $12.000 USD</string>
+    <string name="imagem_representativa_exibindo_moeda_bitcoin">Imagem representativa exibindo moeda bitcoin</string>
 </resources>
