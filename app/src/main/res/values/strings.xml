@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BitcoinChartApp</string>
+    <string name="app_name">BitcoinChart</string>
     <string name="bitcoin_price">Preço da unidade de Bitcoin: $%s USD</string>
-    <string name="imagem_representativa_exibindo_moeda_bitcoin">Imagem representativa exibindo moeda bitcoin</string>
+    <string name="bitcoin_image_content_description">Imagem representativa exibindo moeda bitcoin</string>
 </resources>

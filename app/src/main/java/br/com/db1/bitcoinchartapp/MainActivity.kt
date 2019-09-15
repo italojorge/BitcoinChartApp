@@ -3,6 +3,7 @@ package br.com.db1.bitcoinchartapp
 import android.os.Bundle
 import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import br.com.db1.presentation.ViewStateListener
 import br.com.db1.presentation.bitcoin.BitcoinViewModel
 import com.jjoe64.graphview.DefaultLabelFormatter
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
     }
 
     override fun onStateLoading() {
-
+        swipeRefreshLayout.isRefreshing = true
     }
 
     private val viewModel: BitcoinViewModel by viewModel()
@@ -32,6 +33,11 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
     }
 
     private fun addObservers() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getBitcoinLastValue()
+            viewModel.getBitcoinChart()
+        }
+
         viewModel.getBitcoinLastValueViewState().onPostValue(
             this,
             onSuccess = {
@@ -39,6 +45,7 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
                     getString(R.string.bitcoin_price),
                     it
                 )
+                swipeRefreshLayout.isRefreshing = false
             },
             onError = {}
         )
@@ -47,6 +54,9 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
         viewModel.getBitcoinChartViewState().onPostValue(this,
             onSuccess = {
 
+                swipeRefreshLayout.isRefreshing = false
+
+                graphView.removeAllSeries()
 
                 val series = LineGraphSeries(
                     it.chart.map {
@@ -71,15 +81,18 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
                 graphView.viewport.setMinX(it.chart.first().date.toDouble())
                 graphView.viewport.setMaxX(it.chart.last().date.toDouble())
 
+                    series.title = "Preço médio de mercado em USD dos últimos 30 dias."
+                    graphView.legendRenderer.isVisible = true
+                graphView.legendRenderer.align = LegendRenderer.LegendAlign.TOP
+                graphView.legendRenderer.backgroundColor = ContextCompat.getColor(this,R.color.gray)
+
                 graphView.viewport.isScalable = true
 // activate vertical scrolling
                 graphView.viewport.setScalableY(true)
 
+
                 graphView.addSeries(series)
                 series.setAnimated(true)
-                series.title = "Preço médio de mercado em USD dos últimos 30 dias."
-                graphView.legendRenderer.align = LegendRenderer.LegendAlign.TOP
-                graphView.legendRenderer.isVisible = true
             }
         )
         lifecycle.addObserver(viewModel)

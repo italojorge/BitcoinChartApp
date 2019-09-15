@@ -9,6 +9,7 @@ import br.com.db1.domain.interactor.bitcoinLastValue.GetBitcoinLastValueUseCase
 import br.com.db1.presentation.mapper.bitcoin.BitcoinChartMapper
 import br.com.db1.presentation.model.BitcoinChartBinding
 import br.com.db1.presentation.model.emptyBitcoinChartBinding
+import br.com.db1.presentation.utils.BITCOIN_LAST_VALUE_EMPTY
 import br.com.db1.presentation.utils.extensions.*
 import org.koin.core.KoinComponent
 
@@ -22,7 +23,7 @@ class BitcoinViewModel : ViewModel(),
     private val getBitcoinLastValueUseCase: GetBitcoinLastValueUseCase by useCase()
 
     private var bitcoinChartBinding = emptyBitcoinChartBinding()
-    private var bitcoinLastValueBinding = "0.0"
+    private var bitcoinLastValueBinding = BITCOIN_LAST_VALUE_EMPTY
 
     fun getBitcoinChartViewState() = bitcoinChartViewState.asLiveData()
     fun getBitcoinLastValueViewState() = bitcoinLastValueViewState.asLiveData()
@@ -48,7 +49,7 @@ class BitcoinViewModel : ViewModel(),
 
         getBitcoinLastValueUseCase.execute(
             onSuccess = {
-                bitcoinLastValueBinding = it.lastValue.toString()
+                bitcoinLastValueBinding = it.lastValue.toString().replaceDotWithComma()
                 bitcoinLastValueViewState.postSuccess(bitcoinLastValueBinding)
             },
             onError = {

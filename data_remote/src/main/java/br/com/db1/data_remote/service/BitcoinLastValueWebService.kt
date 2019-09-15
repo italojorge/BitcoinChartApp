@@ -5,6 +5,8 @@ import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface BitcoinLastValueWebService {
-    @GET("ticker")
+    @GET(BITCOIN_TICKER_PATH)
     fun getBitcoinLastValue(): Deferred<BitcoinLastValueResponse>
 }
+
+const val BITCOIN_TICKER_PATH = "ticker"
