@@ -1,23 +1,20 @@
 package br.com.db1.bitcoinchartapp
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import br.com.db1.presentation.ViewStateListener
 import br.com.db1.presentation.bitcoin.BitcoinViewModel
-import com.jjoe64.graphview.DefaultLabelFormatter
-import com.jjoe64.graphview.LegendRenderer
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), ViewStateListener {
     override fun onStateError(error: Throwable) {
-
+        swipeRefreshLayout.isRefreshing = false
+        bitcoinValueTextView.text = getString(R.string.internet_error)
+        toast(getString(R.string.internet_error))
     }
 
     override fun onStateLoading() {
@@ -46,16 +43,18 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
                     it
                 )
                 swipeRefreshLayout.isRefreshing = false
-            },
-            onError = {}
+            }
         )
 
 
         viewModel.getBitcoinChartViewState().onPostValue(this,
             onSuccess = {
                 swipeRefreshLayout.isRefreshing = false
-                graphView.fillSeries(it)
-                graphView.setGraphTitle(getString(R.string.graph_title))
+                graphView.apply {
+                    isVisible = true
+                    fillSeries(it)
+                    setGraphTitle(getString(R.string.graph_title))
+                }
             }
         )
         lifecycle.addObserver(viewModel)

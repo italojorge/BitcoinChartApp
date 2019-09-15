@@ -31,6 +31,7 @@ dependencies {
     implementation project(':presentation')
     implementation project(':data')
     implementation project(':data_remote')
+    implementation project(':data_local')
     implementation project(':domain')
     appDependencies.each { add(it.configuration, it.dependency, it.options) }
 }

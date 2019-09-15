@@ -3,4 +3,5 @@
     <string name="bitcoin_price">Preço da unidade de Bitcoin: $%s USD</string>
     <string name="bitcoin_image_content_description">Imagem representativa exibindo moeda bitcoin</string>
     <string name="graph_title">Preço médio de mercado em USD dos últimos 30 dias.</string>
+    <string name="internet_error">Ocorreu uma falha de conexão, tente novamente!</string>
 </resources>

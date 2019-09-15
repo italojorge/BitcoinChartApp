@@ -1,7 +1,9 @@
 package br.com.db1.bitcoinchartapp.di
 
 import br.com.db1.data.datastore.BitcoinRepositoryImpl
+import br.com.db1.data.repository.local.BitcoinLocalDataSource
 import br.com.db1.data.repository.remote.BitcoinRemoteDataSource
+import br.com.db1.data_local.BitcoinLocalDataSourceImpl
 import br.com.db1.data_remote.datasource.BitcoinRemoteDataSourceImpl
 import br.com.db1.data_remote.service.BitcoinLastValueWebService
 import br.com.db1.data_remote.service.BitcoinChartsWebService
@@ -9,6 +11,7 @@ import br.com.db1.data_remote.utils.BITCOIN_CHARTS_URL
 import br.com.db1.data_remote.utils.BITCOIN_LAST_VALUE_URL
 import br.com.db1.data_remote.utils.WebServiceFactory
 import br.com.db1.domain.repository.BitcoinRepository
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -22,6 +25,8 @@ val dataModule = module {
 
     single { BitcoinRemoteDataSourceImpl(get(),get()) as BitcoinRemoteDataSource }
 
-    single { BitcoinRepositoryImpl(get()) as BitcoinRepository }
+    single { BitcoinLocalDataSourceImpl(androidContext()) as BitcoinLocalDataSource }
+
+    single { BitcoinRepositoryImpl(get(),get()) as BitcoinRepository }
 }
 
