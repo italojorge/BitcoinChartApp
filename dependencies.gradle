@@ -40,4 +40,10 @@ ext {
             [configuration: "implementation", dependency: "$httpInterceptor"],
             [configuration: "implementation", dependency: "$gsonConvertFacotory"]
     ]
+
+    dataLocalDependencies = dataDependencies + testDataLocalDependencies + [
+            [configuration: "implementation", dependency: "$room"],
+            [configuration: "kapt", dependency: "$roomKapt"],
+            [configuration: "implementation", dependency: "$roomKtx"],
+    ]
 }
