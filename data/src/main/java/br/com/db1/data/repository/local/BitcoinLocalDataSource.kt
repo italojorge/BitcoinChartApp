@@ -9,7 +9,7 @@ interface BitcoinLocalDataSource {
 
     suspend fun getBitcoinLastValue(): Either<BitcoinLastValue, Throwable>
 
-    suspend fun insertBitcoinChart(bitcoinChart: BitcoinChart)
+    suspend fun updateBitcoinChart(bitcoinChart: BitcoinChart)
 
-    suspend fun insertBitcoinLastValue(bitcoinLastValue: BitcoinLastValue)
+    suspend fun updateBitcoinLastValue(bitcoinLastValue: BitcoinLastValue)
 }

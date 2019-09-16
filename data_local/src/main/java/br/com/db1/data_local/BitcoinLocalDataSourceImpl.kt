@@ -40,16 +40,16 @@ class BitcoinLocalDataSourceImpl(context: Context) : BitcoinLocalDataSource {
         else Either.Success(result)
     }
 
-    override suspend fun insertBitcoinChart(bitcoinChart: BitcoinChart) {
-        database.bitcoinChartDao().insertAll(
+    override suspend fun updateBitcoinChart(bitcoinChart: BitcoinChart) {
+        database.bitcoinChartDao().updateBitcoinChart(
             BitcoinChartMapper.fromDomain(
                 bitcoinChart
             )
         )
     }
 
-    override suspend fun insertBitcoinLastValue(bitcoinLastValue: BitcoinLastValue) {
-        database.bitcoinLastValueDao().insert(
+    override suspend fun updateBitcoinLastValue(bitcoinLastValue: BitcoinLastValue) {
+        database.bitcoinLastValueDao().updateBitcoinLastValue(
             BitcoinLastValueMapper.fromDomain(bitcoinLastValue)
         )
     }
