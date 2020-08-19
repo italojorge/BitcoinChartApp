@@ -27,10 +27,10 @@ package br.com.db1.domain.core
  */
 sealed class Either<out S, out F> {
     /** * Represents the left side of [Either] class which by convention is a "Failure". */
-    data class Failure<out F>(val a: F) : Either<Nothing, F>()
+    data class Failure<out F>(val cause: F) : Either<Nothing, F>()
 
     /** * Represents the right side of [Either] class which by convention is a "Success". */
-    data class Success<out S>(val b: S) : Either<S, Nothing>()
+    data class Success<out S>(val data: S) : Either<S, Nothing>()
 
     val isRight get() = this is Success<S>
     val isLeft get() = this is Failure<F>
@@ -40,8 +40,8 @@ sealed class Either<out S, out F> {
 
     fun either(fnR: (S) -> Any, fnL: (F) -> Any): Any =
         when (this) {
-            is Failure -> fnL(a)
-            is Success -> fnR(b)
+            is Failure -> fnL(cause)
+            is Success -> fnR(data)
         }
 }
 
@@ -54,9 +54,9 @@ fun <A, B, C> ((A) -> B).c(f: (B) -> C): (A) -> C = {
 fun <T, F, S> Either<S, F>.flatMap(fn: (S) -> Either<T, F>): Either<T, F> =
     when (this) {
         is Either.Failure -> Either.Failure(
-            a
+            cause
         )
-        is Either.Success -> fn(b)
+        is Either.Success -> fn(data)
     }
 
 fun <T, S, F> Either<S, F>.map(fn: (S) -> (T)): Either<T, F> = this.flatMap(fn.c(::right))

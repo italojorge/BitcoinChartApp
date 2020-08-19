@@ -15,13 +15,10 @@ fun <T> viewState() = lazy {
     EventLiveData<ViewState<T>>()
 }
 
-fun <T : EventLiveData<T>> T.asLiveData1(event: () -> Unit) = lazy {
-    this.asLiveData().also { event() }
-}
-
-inline fun <V, reified U> V.useCase() where U : UseCase<*, *>, V : ViewModel, V : KoinComponent = inject<U> {
-    parametersOf(viewModelScope)
-}
+inline fun <V, reified U> V.useCase() where U : UseCase<*, *>, V : ViewModel, V : KoinComponent =
+    inject<U> {
+        parametersOf(viewModelScope)
+    }
 
 
 fun AndroidViewModel.getString(resId: Int): String = getApplication<Application>().getString(resId)

@@ -34,19 +34,12 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
             viewModel.getBitcoinLastValue()
             viewModel.getBitcoinChart()
         }
+        handleBitcoinLastValue()
+        handleBitcoinChart()
+        lifecycle.addObserver(viewModel)
+    }
 
-        viewModel.getBitcoinLastValueViewState().onPostValue(
-            this,
-            onSuccess = {
-                bitcoinValueTextView.text = String.format(
-                    getString(R.string.bitcoin_price),
-                    it
-                )
-                swipeRefreshLayout.isRefreshing = false
-            }
-        )
-
-
+    private fun handleBitcoinChart() {
         viewModel.getBitcoinChartViewState().onPostValue(this,
             onSuccess = {
                 swipeRefreshLayout.isRefreshing = false
@@ -57,7 +50,15 @@ class MainActivity : AppCompatActivity(), ViewStateListener {
                 }
             }
         )
-        lifecycle.addObserver(viewModel)
     }
 
+    private fun handleBitcoinLastValue() {
+        viewModel.getBitcoinLastValueViewState().onPostValue(
+            this,
+            onSuccess = {
+                bitcoinValueTextView.text = getString(R.string.bitcoin_price, it)
+                swipeRefreshLayout.isRefreshing = false
+            }
+        )
+    }
 }

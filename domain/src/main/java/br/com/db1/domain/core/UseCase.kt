@@ -23,5 +23,4 @@ abstract class UseCase<T, in Params>(private val scope: CoroutineScope) {
     }
 
     fun cancel() = scope.cancel()
-
 }

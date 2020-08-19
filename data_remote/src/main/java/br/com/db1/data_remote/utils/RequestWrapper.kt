@@ -1,8 +1,8 @@
 package br.com.db1.data_remote.utils
 
-import com.google.gson.Gson
 import br.com.db1.data_remote.model.ErrorResponse
 import br.com.db1.domain.core.Either
+import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -29,7 +29,7 @@ suspend fun <D> requestWrapper(
 
 
 fun <D> HttpException.parseError(): Either<D, Throwable> {
-    val error = response().errorBody()?.string()?.let { Gson().fromJson<ErrorResponse>(it) }
+    val error = response()?.errorBody()?.string()?.let { Gson().fromJson<ErrorResponse>(it) }
     return Either.Failure(
         DataSourceException(
             message = error?.errorList?.firstOrNull()

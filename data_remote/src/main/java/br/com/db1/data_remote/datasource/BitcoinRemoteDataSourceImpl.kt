@@ -17,14 +17,14 @@ class BitcoinRemoteDataSourceImpl(
     override suspend fun getBitcoinLastValue(): Either<BitcoinLastValue, Throwable> =
         requestWrapper {
             BitcoinLastValueRemoteMapper.toDomain(
-                bitcoinLastValueWebService.getBitcoinLastValue().await()
+                bitcoinLastValueWebService.getBitcoinLastValue()
             )
         }
 
     override suspend fun getBitcoinChart(): Either<BitcoinChart, Throwable> =
         requestWrapper {
             BitcoinChartRemoteMapper.toDomain(
-                bitcoinChartsWebService.getBitcoinChart().await()
+                bitcoinChartsWebService.getBitcoinChart()
             )
         }
 

@@ -11,6 +11,16 @@ class GetBitcoinChartUseCase(
     scope: CoroutineScope
 ) : UseCase<BitcoinChart, Unit>(scope) {
     override suspend fun run(params: Unit?): Either<BitcoinChart, Throwable> {
-        return bitcoinRepository.getBitcoinChart()
+        return when (val result = bitcoinRepository.getBitcoinChart()) {
+            is Either.Success -> checkChartListIsEmpty(result)
+            else -> result
+        }
+    }
+
+    private fun checkChartListIsEmpty(
+        result: Either.Success<BitcoinChart>
+    ): Either<BitcoinChart, Throwable> {
+        return if (result.data.chart.isNotEmpty()) result
+        else Either.Failure(Throwable())
     }
 }

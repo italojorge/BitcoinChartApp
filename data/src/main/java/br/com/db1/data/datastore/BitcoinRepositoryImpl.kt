@@ -14,7 +14,7 @@ class BitcoinRepositoryImpl(
     override suspend fun getBitcoinLastValue(): Either<BitcoinLastValue, Throwable> {
         return when (val result = bitcoinRemoteDataSource.getBitcoinLastValue()) {
             is Either.Success -> {
-                bitcoinLocalDataSource.updateBitcoinLastValue(result.b)
+                bitcoinLocalDataSource.updateBitcoinLastValue(result.data)
                 bitcoinLocalDataSource.getBitcoinLastValue()
             }
             is Either.Failure -> {
@@ -26,7 +26,7 @@ class BitcoinRepositoryImpl(
     override suspend fun getBitcoinChart(): Either<BitcoinChart, Throwable> {
         return when (val result = bitcoinRemoteDataSource.getBitcoinChart()) {
             is Either.Success -> {
-                bitcoinLocalDataSource.updateBitcoinChart(result.b)
+                bitcoinLocalDataSource.updateBitcoinChart(result.data)
                 bitcoinLocalDataSource.getBitcoinChart()
             }
             is Either.Failure -> {

@@ -1,6 +1,10 @@
 package br.com.db1.data_remote.model
 
+import com.google.gson.annotations.SerializedName
+
 data class BitcoinDayValueResponse(
-    val x: Int?,
-    val y: Double?
+    @SerializedName("x")
+    val date: Int?,
+    @SerializedName("y")
+    val value: Double?
 )

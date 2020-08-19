@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Update
 
 interface BaseDao<D> {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(d: D): Long
 
@@ -21,5 +20,4 @@ interface BaseDao<D> {
 
     @Delete
     fun delete(d: D): Int
-
 }
