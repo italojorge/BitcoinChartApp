@@ -12,7 +12,10 @@ import java.util.concurrent.TimeUnit
 
 object WebServiceFactory {
 
-    inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String = BITCOIN_CHARTS_URL): T {
+    inline fun <reified T> createWebService(
+        okHttpClient: OkHttpClient,
+        url: String = BITCOIN_CHARTS_URL
+    ): T {
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
             .client(okHttpClient)
@@ -26,12 +29,13 @@ object WebServiceFactory {
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor())
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(WEB_SERVICE_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(WEB_SERVICE_REQUEST_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(WEB_SERVICE_REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .build()
 
-    private fun httpLoggingInterceptor() = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    private fun httpLoggingInterceptor() =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     object UnitConverterFactory : Converter.Factory() {
         override fun responseBodyConverter(
