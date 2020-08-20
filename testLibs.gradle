@@ -5,13 +5,16 @@ ext {
     junitVersion              = "4.12"
     androidJunitVersion       = "1.1.0"
     robolectricVersion        = "3.4.2"
+    mockkVersion              = "1.9.3"
 
     androidTestRulesVersion   = "1.1.0"
     coreTestVersion           = "2.0.0"
 
     //androidTestImplementation libs
-    androidTestRules        = "androidx.test:rules:$androidTestRulesVersion"
-    androidJunit     = "androidx.test.ext:junit:$androidJunitVersion"
+    androidMockk          = "io.mockk:mockk-android:$mockkVersion"
+    mockk                 = "io.mockk:mockk:$mockkVersion"
+    androidTestRules      = "androidx.test:rules:$androidTestRulesVersion"
+    androidJunit          = "androidx.test.ext:junit:$androidJunitVersion"
 
     //testImplementation libs
     junit            = "junit:junit:$junitVersion"

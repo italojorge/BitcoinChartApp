@@ -1,5 +1,6 @@
 ext {
     testCommonsDependencies = [
+            [configuration: "testImplementation", dependency: "$mockk"],
             [configuration: "testImplementation", dependency: "$junit"],
             [configuration: "testImplementation", dependency: "$mockitoKotlin"],
             [configuration: "testImplementation", dependency: "$kotlinJunit"],

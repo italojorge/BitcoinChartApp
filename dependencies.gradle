@@ -39,7 +39,7 @@ ext {
             [configuration: "implementation", dependency: "$retrofitCoroutine"],
             [configuration: "implementation", dependency: "$httpInterceptor"],
             [configuration: "implementation", dependency: "$gsonConvertFacotory"]
-    ]
+    ] + testDataDependencies
 
     dataLocalDependencies = dataDependencies + testDataLocalDependencies + [
             [configuration: "implementation", dependency: "$room"],
